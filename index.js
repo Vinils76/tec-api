@@ -1,16 +1,28 @@
 import express from 'express';
+import { lerDados } from './src/aluno.js';
 const app = express();
 const porta = 3000;
 
+// Configurando suporte a JSON
+app.use(express.json());
+
+// Configurando suporte a dados de input de formulários
+app.use(express.urlencoded({extended : true}) );
+
+
+
+
 // ENDPOINTS 
+
 //Rota para a raiz da API
 app.get('/', (req, res) => {
-    res.send('É um dia lindo hoje');
+    res.send('Raiz da API');
 });
 
 //Rota para exibir todos os alunos
 app.get('/alunos', (req, res) => {
-    res.send('Exibindo todos os alunos');
+    //res.send('Exibindo todos os alunos');
+    lerDados(res);
 });
 
 //Rota exibindo um único aluno
@@ -33,14 +45,13 @@ app.patch('/alunos/:id', (req, res) => {
     res.send('atualizar alguns/todos os dados do aluno');
 });
 
+//Rota para deletar aluno
 app.delete('/alunos/:id', (req, res) => {
     res.send('Excluindo aluno');
 });
 
-
-
 // Configurando o servidor
 
 app.listen(porta, () => {
-    console.log('Ta lindo boy');
+    console.log('Ta lindo');
 });
