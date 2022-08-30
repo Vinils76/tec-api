@@ -1,5 +1,5 @@
 import express from 'express';
-import { lerDados } from './src/aluno.js';
+import { lerDados, inserir, lerUm, atualizar } from './src/aluno.js';
 const app = express();
 const porta = 3000;
 
@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended : true}) );
 
 //Rota para a raiz da API
 app.get('/', (req, res) => {
-    res.send('Raiz da API');
+    res.send('Raiz da API-NODE');
 });
 
 //Rota para exibir todos os alunos
@@ -27,12 +27,16 @@ app.get('/alunos', (req, res) => {
 
 //Rota exibindo um único aluno
 app.get('/alunos/:id', (req, res) => {
-    res.send('Um único aluno');
+    //res.send('Um único aluno');
+    const id = parseInt(req.params.id); //parseInt assegura que vá retornar um número
+    lerUm(id, res);
 });
 
 //Rota para inserir alunos
 app.post('/alunos', (req, res) => {
-    res.send('Inserir alunos');
+    //res.send('Inserir alunos');
+    const newAluno = req.body;
+    inserir(newAluno, res);
 });
 
 //Rota para atualizar todos os dados do aluno
@@ -42,7 +46,10 @@ app.put('/alunos/:id', (req, res) => {
 
 //Rota para atualizar alguns/todos os dados do aluno
 app.patch('/alunos/:id', (req, res) => {
-    res.send('atualizar alguns/todos os dados do aluno');
+    //res.send('atualizar alguns/todos os dados do aluno');
+    const id = parseInt(req.params.id);
+    const aluno = req.body;
+    atualizar(id, aluno, res);
 });
 
 //Rota para deletar aluno
