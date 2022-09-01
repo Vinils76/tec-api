@@ -16,8 +16,8 @@ conexao.query(sql, (erro, resultado) => {
     } else {
         res.status(200).json(resultado); //200 - Tudo ok
     }
-    })
-};
+    });
+}
 
 function lerUm(id, res) {
     const sql = "SELECT * FROM alunos WHERE id = ?";
@@ -48,7 +48,7 @@ function inserir(aluno, res) {
         } else {
             res.status(201).json({"status:": "Aluno encherido"}); // 201 req criada e apresenta mensagem de ok
         }
-    })
+    });
 }
 
 // Atualizar alunos
@@ -66,7 +66,19 @@ function atualizar(id, aluno, res) {
             // spread operator (operador de espalhamento de objetos)
             res.status(200).json( {...aluno, id});
         }
-    })
+    });
 }
 
-export {lerDados, inserir, lerUm, atualizar};
+function excluir(id, res) {
+    const sql = "DELETE FROM alunos WHERE id = ?";
+
+    conexao.query(sql, id, (erro, resultado) => {
+        if(erro){
+            res.status(400).json(erro.code);
+        } else {
+            res.status(200).json({"status:": "Aluno cancelado", id});
+        }
+    });
+}
+
+export {lerDados, inserir, lerUm, atualizar, excluir};
