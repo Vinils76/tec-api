@@ -1,15 +1,17 @@
 import express from 'express';
+import cors from 'cors';
 import { lerDados, inserir, lerUm, atualizar, excluir } from './src/aluno.js';
 const app = express();
 const porta = process.env.PORT || 3000;
+
+// Configurando requisições de diferentes origens
+app.use(cors());
 
 // Configurando suporte a JSON
 app.use(express.json());
 
 // Configurando suporte a dados de input de formulários
 app.use(express.urlencoded({extended : true}) );
-
-
 
 
 // ENDPOINTS 
